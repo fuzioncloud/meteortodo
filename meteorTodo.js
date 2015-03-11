@@ -22,7 +22,7 @@ if (Meteor.isClient) {
 
   // Inside the if (Meteor.isClient) block, right after Template.body.helpers:
   Template.body.events({
-    "submit .new-task": function(event) {
+    "submit .new-task": function (event) {
       // This function is called when the new task form is submitted
 
       var text = event.target.text.value;
@@ -37,6 +37,17 @@ if (Meteor.isClient) {
 
       // Prevent default form submit
       return false;
+    }
+  });
+
+  // below everything else within the client code
+  Template.task.events({
+    "click .toggle-checked": function() {
+      // Set the checked property to the opposite of its current value
+      Tasks.update(this._id, {$set: {checked: ! this.checked}});
+    },
+    "click .delete": function() {
+      Tasks.remove(this._id);
     }
   });
 
