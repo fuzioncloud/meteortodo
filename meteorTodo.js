@@ -1,3 +1,5 @@
+// a JavaScript file loaded on both client and server
+
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
