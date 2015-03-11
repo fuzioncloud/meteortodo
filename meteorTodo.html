@@ -1,15 +1,31 @@
 <!--an HTML file that defines view templates-->
 
 <head>
-  <title>meteorTodo</title>
+  <title>METEOR Todo LIST</title>
 </head>
 
 <body>
+
   <h1>Welcome to Meteor!</h1>
-  {{> hello}}
+
+  <div class="container">
+    <header>
+      <h1>Todo List</h1>
+    </header>
+
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+
+    </ul>
+
+  </div>
+
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="task">
+  <li>
+    {{text}}
+  </li>
 </template>
