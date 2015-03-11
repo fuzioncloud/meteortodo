@@ -484,9 +484,10 @@ In the HTML, right under the checkbox, include the following code to add a login
 Then, in your JavaScript, add the following code to configure the accounts UI to use usernames instead of email addresses:
 
 >```javascript
-Accounts.ui.config({
-  passwordSignupFields: "USERNAME_ONLY"
-});
+    Accounts.ui.config({
+       passwordSignupFields: "USERNAME_ONLY"
+    });
+    ```
 
 Now users can create accounts and log into your app! This is very nice, but logging in and out isn't very useful yet. Let's add two functions:
 
@@ -501,15 +502,15 @@ To do this, we will add two new fields to the tasks collection:
 First, let's add some code to save these fields into the submit `.new-task` event handler:
 
 >```javascript
-Tasks.insert({
-  text: text,                        
-  createdAt: new Date(),            // current time
-  owner: Meteor.userId(),           // _id of logged in user
-  username: Meteor.user().username  // username of logged in user
-});
-```
+    Tasks.insert({
+      text: text,                        
+      createdAt: new Date(),            // current time
+      owner: Meteor.userId(),           // _id of logged in user
+      username: Meteor.user().username  // username of logged in user
+    });
+    ```
 
-Then, in our HTML, add an #if block helper to only show the form when there is a logged in user:
+Then, in our HTML, add an `#if` block helper to only show the form when there is a logged in user:
 
 >```html
 {{#if currentUser}}
