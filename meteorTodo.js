@@ -72,11 +72,10 @@ if (Meteor.isClient) {
   });
 
   Template.task.helpers({
-  isOwner: function () {
-    return this.owner === Meteor.userId();
-  }
-});
-
+    isOwner: function () {
+      return this.owner === Meteor.userId();
+    }
+  });
 
 
   // Accounts config at the bottom of the client code

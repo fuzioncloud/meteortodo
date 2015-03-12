@@ -1,6 +1,19 @@
 # Meteor Tutorial
 
-## Creating your first app
+## Installing Meteor
+
+Install the newest version of Meteor with one command on OS X or Linux. Open your terminal and type:
+
+>```sh
+curl https://install.meteor.com/ | sh
+```
+
+The official installer supports Mac OS X 10.7 (Lion) and above, and Linux on x86 and x86_64 architectures.
+
+Now that you've installed Meteor, check out the [tutorial](https://www.meteor.com/try) that teaches you how to build a collaborative todo list app while showing you Meteor's most exciting and useful features. You can also read about [the design of the Meteor platform](https://www.meteor.com/projects) or check out the [complete documentation](https://docs.meteor.com/).
+
+## Chapter 1 - Creating an app
+### Creating your first app
 
 To create a Meteor app, open your terminal and type:
 
@@ -36,15 +49,13 @@ Now that you have some experience editing the files in your Meteor app, let's st
 * [simple-todos.css](http://gitlab.fuzioncloud.com/Zeb/meteor_todo_tutorial/blob/master/meteorTodo.css)
 * [diff of all files](http://gitlab.fuzioncloud.com/Zeb/meteor_todo_tutorial/commit/1cd2c8f5b153862aad723cb34c70bb56c17750fa)
 
-
-
-## Defining views with templates
+## Chapter 2 - Templates
+### Defining views with templates
 
 To start working on our todo list app, let's replace the code of the default starter app with the code below. Then we'll talk about what it does.
 
-
->```
->    `<!-- simple-todos.html -->`
+>```html
+>    <!-- simple-todos.html -->
 >
     <head>
        <title>Todo List</title>
@@ -67,9 +78,11 @@ To start working on our todo list app, let's replace the code of the default sta
     <template name="task">
       <li>{{text}}</li>
     </template>
+    ```
+
+<br>
 
 
-simple-todo.js
 >```javascript
     // simple-todos.js
     if (Meteor.isClient) {
@@ -83,6 +96,8 @@ simple-todo.js
       });
     }
     ```
+
+<br>
 
 In our browser, the app will now look much like this:
 
@@ -118,7 +133,8 @@ Before we go any further, let's make our app look nice by adding some CSS.
 Since this tutorial is focused on working with HTML and JavaScript, just copy all the CSS code below into `simple-todos.css`. This is all the CSS code you will need until the end of the tutorial. The app will still work without the CSS, but it will look much nicer if you add it.
 
 
-## Storing tasks in a collection
+## Chapter 3 - Collections
+### Storing tasks in a collection
 
 Collections are Meteor's way of storing persistent data. The special thing about collections in Meteor is that they can be accessed from both the server and the client, making it easy to write view logic without having to write a lot of server code. They also update themselves automatically, so a template backed by a collection will automatically display the most up-to-date data.
 
@@ -161,7 +177,8 @@ In your web browser, you will see the UI of your app immediately update to show 
 Insert a few more tasks from the database console with different text. In the next step, we'll see how to add functionality to our app's UI so that we can add tasks without using the database console.
 
 
-## Adding tasks with a form
+## Chapter 4 - Forms and Events
+### Adding tasks with a form
 
 In this step, we'll add an input field for users to add tasks to the list.
 
@@ -237,8 +254,8 @@ We can solve this by sorting the results using the `createdAt` field that is aut
 
 In the next step, we'll add some very important todo list functions: checking off and deleting tasks.
 
-## Chapter 5
-## Checking off and deleting tasks
+## Chapter 5 - Update and Remove
+### Checking off and deleting tasks
 
 Until now, we have only interacted with a collection by inserting documents. Now, we will learn how to update and remove them.
 
@@ -296,9 +313,8 @@ If you try checking off some tasks after adding all of the above code, you will 
   
 With this code, if the checked property of a task is true, the checked class is added to our list item. Using this class, we can make checked-off tasks look different in our CSS.
 
-
-## Chapter 6
-## Deploying your app
+## Chapter 6 - Deploying an app
+### Deploying your app
 
 Now that we have a working todo list app, we can share it with our friends! Meteor makes it really easy to put an app up on the internet where other people can use it.
 
@@ -314,8 +330,8 @@ Try opening the app on multiple devices such as your phone and your friend's com
 
 Congratulations, you've made a working app that you can now use with your friends! In later steps we will add more functionality involving multiple users, private tasks, and search. First, we'll take a detour to see that while we were building a web app, we also created a pretty nice mobile app along the way.
 
-## Ch 7
-## Running your app on Android or iOS
+## Ch 7 - Running on Mobile
+### Running your app on Android or iOS
 
 So far, we've been building our app and testing only in a web browser, but Meteor has been designed to work across different platforms - your simple todo list website can become an iOS or Android app in just a few commands.
 
@@ -396,8 +412,8 @@ meteor run ios-device --mobile-server my_app_name.meteor.com
 
 Now that we have seen how easy it is to deploy our app and run it on mobile, let's get to adding some more features.
 
-### Ch 8
-## Storing temporary UI state in Session
+## Ch 8 - Temporary UI State
+### Storing temporary UI state in Session
 
 In this step, we'll add a client-side data filtering feature to our app, so that users can check a box to only see incomplete tasks. We're going to learn how to use `Session` to store temporary reactive state on the client.
 
@@ -464,8 +480,8 @@ incompleteCount: function() {
 ><h1>Todo List ({{incompleteCount}})</h1>
 >```
 
-## Ch 9
-## Adding user accounts
+## Ch 9 - Adding User Accounts
+### Adding user accounts
 
 Meteor comes with an accounts system and a drop-in login user interface that lets you add multi-user functionality to your app in minutes.
 
@@ -540,8 +556,8 @@ In your JavaScript code, you can use `Meteor.userId()` to get the current user's
 
 In the next step, we will learn how to make our app more secure by doing all of our data validation on the server instead of the client.
 
-## Ch 10
-## Security with methods
+## Ch 10 - Security with Methods
+### Security with methods
 
 Before this step, any user of the app could edit any part of the database. This might be okay for very small internal apps or demos, but any real application needs to control permissions for its data. In Meteor, the best way to do this is by declaring methods. Instead of the client code directly calling `insert`, `update`, and `remove`, it will instead call methods that will check if the user is authorized to complete the action and then make any changes to the database on the client's behalf.
 
@@ -587,29 +603,32 @@ Meteor.methods({
 Now that we have defined our methods, we need to update the places we were operating on the collection to use the methods instead:
 
 >```javascript
->    // replace Tasks.insert( ... ) with:
-    Meteor.call("addTask", text);
+// replace Tasks.insert( ... ) with:
+Meteor.call("addTask", text);
 >
-    // replace Tasks.update( ... ) with:
-    Meteor.call("setChecked", this._id, ! this.checked);
+// replace Tasks.update( ... ) with:
+Meteor.call("setChecked", this._id, ! this.checked);
 >
-    // replace Tasks.remove( ... ) with:
-    Meteor.call("deleteTask", this._id);
->    ```
+// replace Tasks.remove( ... ) with:
+Meteor.call("deleteTask", this._id);
+```
 
 Now all of our inputs and buttons will start working again. What did we gain from all of this work?
 
 1. When we insert tasks into the database, we can now securely verify that the user is logged in, that the `createdAt` field is correct, and that the `owner` and `username` fields are correct and the user isn't impersonating anyone.
+
 2. We can add extra validation logic to `setChecked` and `deleteTask` in later steps when users can make tasks private.
+
 3. Our client code is now more separated from our database logic. Instead of a lot of stuff happening inside our event handlers, we now have methods that can be called from anywhere.
 
 ### Latency compensation
 
-So why do we want to define our methods on the client and on the server? We do this to enable a feature called *latency* compensation.
+So why do we want to define our methods on the client and on the server? We do this to enable a feature called *latency compensation*.
 
 When you call a method on the client using `Meteor.call`, two things happen in parallel:
 
 1. The client sends a request to the server to run the method in a secure environment, just like an AJAX request would work
+
 2. A simulation of the method runs directly on the client to attempt to predict the outcome of the server call using the available information
 
 What this means is that a newly created task actually appears on the screen *before* the result comes back from the server.
@@ -618,8 +637,8 @@ If the result from the server comes back and is consistent with the simulation o
 
 With Meteor methods and latency compensation, you get the best of both worlds — the security of server code and no round-trip delay.
 
-
-## Filtering data with publish and subscribe
+## Chapter 11 - Publish and Subscribe
+### Filtering data with publish and subscribe
 
 Now that we have moved all of our app's sensitive code into methods, we need to learn about the other half of Meteor's security story. Until now, we have worked assuming the entire database is present on the client, meaning if we call `Tasks.find()` we will get every task in the collection. That's not good if users of our application want to store privacy-sensitive data. We need a way of controlling which data Meteor sends to the client-side database.
 
@@ -634,20 +653,20 @@ When the app refreshes, the task list will be empty. Without the `autopublish` p
 Let's add them now.
 
 >```javascript
-    // At the bottom of simple-todos.js
-    if (Meteor.isServer) {
-      Meteor.publish("tasks", function () {
-        return Tasks.find();
-      });
-    }
-    ```
+// At the bottom of simple-todos.js
+if (Meteor.isServer) {
+  Meteor.publish("tasks", function () {
+    return Tasks.find();
+  });
+}
+```
 
 <br>
 
 >```javascript
-    // At the top of our client code
-    Meteor.subscribe("tasks");
-    ```
+// At the top of our client code
+Meteor.subscribe("tasks");
+```
 
 Once you have added this code, all of the tasks will reappear.
 
@@ -658,48 +677,51 @@ Calling `Meteor.publish` on the server registers a *publication* named `"tasks"`
 First, let's add another property to tasks called "private" and a button for users to mark a task as private. This button should only show up for the owner of a task. It will display the current state of the item.
 
 >```html
-    <!-- add right below the code for the checkbox in the task template -->
-    {{#if isOwner}}
-      <button class="toggle-private">
-        {{#if private}}
-          Private
-        {{else}}
-          Public
-        {{/if}}
-      </button>
-    {{/if}}
+<!-- add right below the code for the checkbox in the task template -->
+  {{#if isOwner}}
+    <button class="toggle-private">
+      {{#if private}}
+        Private
+      {{else}}
+        Public
+      {{/if}}
+    </button>
+  {{/if}}
 >
-    <!-- modify the li tag to have the private class if the item is private -->
-    <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
-    ```
+<!-- modify the li tag to have the private class if the item is private -->
+<li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
+```
 
 We need to modify our JavaScript code in three places:
 
 >```javascript
-    // Define a helper to check if the current user is the task owner
-    Template.task.helpers({
-      isOwner: function () {
-        return this.owner === Meteor.userId();
+  // Define a helper to check if the current user is the task owner
+  Template.task.helpers({
+    isOwner: function () {
+      return this.owner === Meteor.userId();
+    }
+  });
+>
+  // Add an event for the new button to Template.task.events
+  "click .toggle-private": function () {
+    Meteor.call("setPrivate", this._id, ! this.private);
+  }
+>
+  // Add a method to `Meteor.methods` called `setPrivate`
+  setPrivate: function (taskId, setToPrivate) {
+    var task = Tasks.findOne(taskId);
+    // Make sure only the task owner can make a task private
+    if (task.owner !== Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+>
+    Tasks.update(taskId, {
+      $set: {
+        private: setToPrivate
       }
     });
->
-    // Add an event for the new button to Template.task.events
-    "click .toggle-private": function () {
-      Meteor.call("setPrivate", this._id, ! this.private);
-    }
->
-    // Add a method to Meteor.methods called setPrivate
-    setPrivate: function (taskId, setToPrivate) {
-      var task = Tasks.findOne(taskId);
->
-      // Make sure only the task owner can make a task private
-      if (task.owner !== Meteor.userId()) {
-        throw new Meteor.Error("not-authorized");
-      }
->
-      Tasks.update(taskId, { $set: { private: setToPrivate } });
-    }
-    ```
+  }
+  ```
     
 Now that we have a way of setting which tasks are private, we should modify our publication function to only send the tasks that a user is authorized to see:
 
