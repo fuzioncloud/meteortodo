@@ -84,18 +84,18 @@ To start working on our todo list app, let's replace the code of the default sta
 
 
 >```javascript
-    // simple-todos.js
-    if (Meteor.isClient) {
-      // This code only runs on the client
-      Template.body.helpers({
-        tasks: [
-        { text: "This is task 1" },
-        { text: "This is task 2" },
-        { text: "This is task 3" }
-    ]
-      });
-    }
-    ```
+// simple-todos.js
+if (Meteor.isClient) {
+  // This code only runs on the client
+  Template.body.helpers({
+    tasks: [
+    { text: "This is task 1" },
+    { text: "This is task 2" },
+    { text: "This is task 3" }
+]
+  });
+}
+```
 
 <br>
 
@@ -143,18 +143,18 @@ Creating a new collection is as easy as calling `MyCollection = new Mongo.Collec
 Let's update our JavaScript code to get our tasks from a collection instead of a static array:
 
 >```javascript
-    // simple-todos.js
-    Tasks = new Mongo.Collection("tasks");
+// simple-todos.js
+Tasks = new Mongo.Collection("tasks");
 >
-    if (Meteor.isClient) {
-      // This code only runs on the client
-      Template.body.helpers({
-        tasks: function () {
-          return Tasks.find({});
-        }
-      });
+if (Meteor.isClient) {
+  // This code only runs on the client
+  Template.body.helpers({
+    tasks: function () {
+      return Tasks.find({});
     }
-    ```
+  });
+}
+```
 
 When you make these changes to the code, you'll notice that the tasks that used to be in the todo list have disappeared. That's because our database is currently empty — we need to insert some tasks!
 
@@ -185,39 +185,39 @@ In this step, we'll add an input field for users to add tasks to the list.
 First, let's add a form to our HTML:
 
 >```html
-   <header>
-     <h1>Todo List</h1>
+<header>
+ <h1>Todo List</h1>
 >
-   <!-- add a form below the h1 -->
-    <form class="new-task">
-      <input type="text" name="text" placeholder="Type to add new tasks" />
-    </form>
-   </header>
+<!-- add a form below the h1 -->
+<form class="new-task">
+  <input type="text" name="text" placeholder="Type to add new tasks" />
+</form>
+</header>
 ```
 
 Here's the JavaScript code we need to add to listen to the submit event on the form:
 
 >```javascript
-    // Inside the if (Meteor.isClient) block, right after Template.body.helpers:
-    Template.body.events({
-      "submit .new-task": function (event) {
-    // This function is called when the new task form is submitted
->
-    var text = event.target.text.value;
->
-    Tasks.insert({
-      text: text,
-      createdAt: new Date() // current time
-    });
->
-    // Clear form
-    event.target.text.value = "";
->
-    // Prevent default form submit
-    return false;
-      }
-    });
-    ```
+  // Inside the if (Meteor.isClient) block, right after Template.body.helpers:
+  Template.body.events({
+    "submit .new-task": function (event) {
+  // This function is called when the new task form is submitted
+  >
+  var text = event.target.text.value;
+  >
+  Tasks.insert({
+    text: text,
+    createdAt: new Date() // current time
+  });
+  >
+  // Clear form
+  event.target.text.value = "";
+  >
+  // Prevent default form submit
+  return false;
+    }
+  });
+  ```
 
 Now your app has a new input field. To add a task, just type into the input field and hit enter. If you open a new browser window and open the app again, you'll see that the list is automatically synchronized between all clients.
 
@@ -760,7 +760,23 @@ In order to finish up our private task feature, we need to add checks to our `de
     
 We're done with our private task feature! Now our app is secure from attackers trying to view or modify someone's private tasks.
 
+## Chapter 12 -Next Steps
+### What's next?
 
+Congratulations on your newly built Meteor app! Don't forget to deploy it again so your friends can use the new features.
+
+Your app currently supports collaborating on a single todo list. To see how you could add more functionality, check out the Todos example — a more complete app that can handle sharing multiple lists. Also, try Local Market, a cross-platform customer engagement app that shows off native hardware functionality and social features.
+
+>```sh
+meteor create --example todos
+meteor create --example localmarket
+```
+
+Here are some options for where you can go next:
+
+1. Grab a [copy of Discover Meteor](), the best Meteor book out there
+2. Read about [the design of the Meteor platform]() to see how all of the parts fit together
+3. Check out the [complete documentation]()
 
 
 
