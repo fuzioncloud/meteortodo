@@ -67,7 +67,7 @@ if (Meteor.isClient) {
       Meteor.call("deleteTask", this._id);
     },
     "click .toggle-private": function () {
-      Meteor.call("setPrivate", this._id, !this.private);
+      Meteor.call("setPrivate", this._id, this.private);
     }
   });
 
