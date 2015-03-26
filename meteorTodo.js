@@ -98,27 +98,13 @@ Meteor.methods({
       throw new Meteor.Error("not-authorized");
     }
 
-    Tasks.insert({
-      text: text,
-      createdAt: new Date(),
-      owner: Meteor.userId(),
-      username: Meteor.user().username
-    });
+    Meteor.call("addTask", text);
   },
   deleteTask: function (taskId) {
-    Tasks.remove(taskId);
-    var task = Tasks.findOne(taskId);
-    if (task.private && task.owner !== Meteor.userId()) {
-      // If the task is private, make sure only the owner can delete it
-      throw new Meteor.Error("not-authorized");
-    }
+    Meteor.call("deletTask", this._id);
   },
   setChecked: function (taskId, setChecked) {
-    Tasks.update(taskId, {
-      $set: {
-        checked: setChecked
-      }
-    });
+    Meteor.call("setChecked", this._id, !this.checked);
   },
   // add a method to Method.methods called setPrivate
   setPrivate: function (taskId, setToPrivate) {
